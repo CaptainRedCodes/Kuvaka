@@ -81,6 +81,3 @@ class Result(Base):
     lead = relationship("Csv_input", backref="results")
     offer = relationship("Offer", backref="results")
 
-
-# Automatically creates tables (only for dev/test use)
-Base.metadata.create_all(bind=engine)
