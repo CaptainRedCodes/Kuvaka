@@ -39,12 +39,6 @@ A FastAPI backend service for intelligent lead scoring that combines rule-based 
                        │  Final Scoring  │
                        │ & Prioritization│
                        └─────────────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │ PostgreSQL DB   │
-                       │ (Persistence)   │
-                       └─────────────────┘
 ```
 
 ---
