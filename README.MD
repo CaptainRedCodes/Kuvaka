@@ -48,7 +48,7 @@ A FastAPI backend service for intelligent lead scoring that combines rule-based 
 | Component | Technology |
 |-----------|------------|
 | **Backend Framework** | FastAPI |
-| **Database** | PostgreSQL |
+| **Database** | PostgreSQL[Deployed],SQLite[Local] |
 | **ORM** | SQLAlchemy |
 | **AI Model** | GROQ API |
 | **Deployment** | Render |
@@ -82,23 +82,22 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```ini
-# Database Configuration
-DATABASE_URL=sqlite:///./test.db   # Local SQLite for development
-# DATABASE_URL=postgresql://user:password@localhost/dbname  # PostgreSQL
-
 # AI Configuration
 GROQ_API_KEY=your_GROQ_api_key_here
 
 # Optional Configuration
 DEBUG=True
 ```
+# Database Configuration
+DATABASE_URL=sqlite:///./test.db   # Local SQLite for development
+DATABASE_URL=postgresql://user:password@localhost/dbname  # PostgreSQL
 
 ### 5. Run Development Server
 ```bash
 uvicorn app.main:app --reload
 ```
 
-🎉 **Success!** Navigate to `http://127.0.0.1:8000/docs` for interactive API documentation.
+Navigate to `http://127.0.0.1:8000/docs` for interactive API documentation.
 
 
 ---
@@ -125,7 +124,7 @@ John Doe,john@company.com,TechCorp,CEO,Technology,San Francisco,"Tech entreprene
 
 ---
 
-### 🎯 Create Offer
+### Create Offer
 Define your product/service offer for contextual scoring.
 
 **Endpoint**: `POST /offer`
@@ -142,7 +141,7 @@ curl -X POST "https://kuvaka-1zia.onrender.com/api/offer" \
 
 ---
 
-### ⚡ Score Leads
+### Score Leads
 Trigger intelligent scoring for uploaded leads against specific offer.
 
 **Endpoint**: `POST /score`
@@ -155,7 +154,7 @@ curl -X POST "https://kuvaka-1zia.onrender.com/api/score" \
 
 ---
 
-### 📊 Get Results
+### Get Results
 Retrieve scoring results with detailed breakdown.
 
 **Endpoint**: `GET /results`
@@ -187,7 +186,7 @@ curl "https://kuvaka-1zia.onrender.com/api/results" \
 
 ---
 
-### 📥 Download Results
+### Download Results
 Export scored leads as CSV file.
 
 **Endpoint**: `GET /download`
