@@ -10,9 +10,9 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ScoringWeights:
-    DECISION_MAKER_SCORE: int = 30
-    INFLUENCER_SCORE: int = 15
-    EXACT_ICP_SCORE: int = 25
+    DECISION_MAKER_SCORE: int = 20
+    INFLUENCER_SCORE: int = 10
+    EXACT_ICP_SCORE: int = 20
     ADJACENT_ICP_SCORE: int = 10
     COMPLETENESS_SCORE: int = 10
     AI_HIGH_SCORE: int = 50
@@ -203,43 +203,42 @@ Respond with: [HIGH/MEDIUM/LOW] - [brief explanation]"""
         ideal_use_cases = offer_data.get('ideal_use_cases', [])
         
         offer_info = f"""
-Product: {offer_data.get('name', 'N/A')}
-Value Props: {', '.join(value_props) if value_props else 'N/A'}
-Ideal Use Cases: {', '.join(ideal_use_cases) if ideal_use_cases else 'N/A'}
-        """.strip()
+                    Product: {offer_data.get('name', 'N/A')}
+                    Value Props: {', '.join(value_props) if value_props else 'N/A'}
+                    Ideal Use Cases: {', '.join(ideal_use_cases) if ideal_use_cases else 'N/A'}
+                            """.strip()
         
         prospects_info = ""
         for i, prospect in enumerate(prospects_batch, 1):
             prospects_info += f"""
-PROSPECT {i}:
-Name: {prospect.get('name', 'N/A')}
-Role: {prospect.get('role', 'N/A')}
-Company: {prospect.get('company', 'N/A')}
-Industry: {prospect.get('industry', 'N/A')}
-Location: {prospect.get('location', 'N/A')}
-LinkedIn Bio: {str(prospect.get('linkedin_bio', 'N/A'))[:150]}...
+                                PROSPECT {i}:
+                                Name: {prospect.get('name', 'N/A')}
+                                Role: {prospect.get('role', 'N/A')}
+                                Company: {prospect.get('company', 'N/A')}
+                                Industry: {prospect.get('industry', 'N/A')}
+                                Location: {prospect.get('location', 'N/A')}
+                                LinkedIn Bio: {str(prospect.get('linkedin_bio', 'N/A'))[:150]}...
 
-"""
+                                """
         
         prompt = f"""Analyze these prospects' fit for our offer:
+                        OFFER:
+                        {offer_info}
 
-OFFER:
-{offer_info}
+                        PROSPECTS:
+                        {prospects_info}
 
-PROSPECTS:
-{prospects_info}
+                        For EACH prospect, classify their purchase intent as:
+                        - HIGH: Perfect fit, likely decision maker, strong need indicated
+                        - MEDIUM: Good fit with some alignment, potential interest  
+                        - LOW: Poor fit, unlikely to be interested or able to buy
 
-For EACH prospect, classify their purchase intent as:
-- HIGH: Perfect fit, likely decision maker, strong need indicated
-- MEDIUM: Good fit with some alignment, potential interest  
-- LOW: Poor fit, unlikely to be interested or able to buy
+                        IMPORTANT: Respond with EXACTLY this format for each prospect:
+                        PROSPECT 1: [HIGH/MEDIUM/LOW] - [brief 1-sentence explanation]
+                        PROSPECT 2: [HIGH/MEDIUM/LOW] - [brief 1-sentence explanation]
+                        (continue for all prospects...)
 
-IMPORTANT: Respond with EXACTLY this format for each prospect:
-PROSPECT 1: [HIGH/MEDIUM/LOW] - [brief 1-sentence explanation]
-PROSPECT 2: [HIGH/MEDIUM/LOW] - [brief 1-sentence explanation]
-(continue for all prospects...)
-
-Do not include any other text or formatting."""
+                        Do not include any other text or formatting."""
 
         return prompt
     
