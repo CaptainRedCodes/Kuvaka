@@ -163,26 +163,6 @@ Retrieve scoring results with detailed breakdown.
 curl "https://kuvaka-1zia.onrender.com/api/results" \
     -H "Content-Type: application/json" \
     -d '{"offer_name": 'AI Sales Assistant'}'
-```
-
-**Response Example**:
-```json
-{
-  "total_leads": 150,
-  "high_intent": 23,
-  "medium_intent": 67,
-  "low_intent": 60,
-  "leads": [
-    {
-      "name": "John Doe",
-      "email": "john@company.com",
-      "score": 85,
-      "intent_level": "High",
-      "reasoning": "CEO role (+20), Tech industry match (+10), Strong LinkedIn presence indicating authority"
-    }
-  ]
-}
-```
 
 ---
 
